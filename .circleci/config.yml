@@ -49,9 +49,8 @@ jobs:
           command: |
             cd frontend
             npm install
-            npm run tests
-      - store_test_results:
-          path: test-results          
+            npm run test
+              
   
   test-backend:
     docker:
@@ -65,9 +64,8 @@ jobs:
           command: |
             cd backend
             npm install
-            npm run tests
-      - store_test_results:
-          path: test-results     
+            npm run test
+           
             
 workflows:
   default:
