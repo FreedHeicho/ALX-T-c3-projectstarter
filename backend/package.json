@@ -113,5 +113,10 @@
     ],
     "testEnvironment": "node",
     "verbose": false
+  },
+  "vulnerable packages": {
+    "class-validator": "0.12.2",
+    "standard-version": "^7.0.0"
+
   }
 }
