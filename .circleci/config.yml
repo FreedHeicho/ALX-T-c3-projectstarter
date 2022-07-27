@@ -50,7 +50,7 @@ jobs:
             cd frontend
             npm install
             npm run tests
-                
+      - store_test_results          
   test-backend:
     docker:
       - image: circleci/node:13.8.0
@@ -64,7 +64,7 @@ jobs:
             cd backend
             npm install
             npm run tests
-           
+      - store_test_results     
             
 workflows:
   default:
