@@ -13,9 +13,9 @@ commands:
           name: Destroy environments
           when: on_fail
           command: |
-            aws s3 rm s3://udapeople-<<parameters.Workflow_ID>> --recursive
-            aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
-            aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
+            - aws s3 rm s3://udapeople-<<parameters.Workflow_ID>> --recursive
+            - aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
+            - aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
   install_awscli:
     description: Installing AWS CLI v2
     steps:
@@ -201,9 +201,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            install_awscli
-            install_ansible
-            yum install -y tar gzip
+            - install_awscli
+            - install_ansible
+            - yum install -y tar gzip
       - run:
           name: Configure server
           command: |
