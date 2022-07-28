@@ -20,7 +20,7 @@ commands:
     description: Installing AWS CLI v2
     steps:
       - run:
-          name: Install AWS VLI v2
+          name: Install AWS CLI v2
           command: |
             curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
             unzip awscliv2.zip
@@ -184,11 +184,14 @@ jobs:
             --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
             --query 'Reservations[*].Instances[*].PublicIpAddress' \
             --output text >> inventory.txt
+
             
       - persist_to_workspace:
           root: ~/
           paths:
             - project/.circleci/ansible/inventory.txt
+      - destroy-environment
+  
   configure-infrastructure:
     docker:
       - image: cimg/base:current
@@ -201,7 +204,6 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-             install_awscli
              install_ansible
              yum install -y tar gzip
       - run:
