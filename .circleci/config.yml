@@ -201,11 +201,11 @@ jobs:
           fingerprints: ["24:18:4a:00:d3:99:96:97:24:48:8a:d6:29:ad:2e:7e"]
       - attach_workspace:
           at: ~/
+      - install_awscli
+      - install_ansible
       - run:
           name: Install dependencies
-          command: |
-             install_ansible
-             yum install -y tar gzip
+          command: yum install -y tar gzip
       - run:
           name: Configure server
           command: |
