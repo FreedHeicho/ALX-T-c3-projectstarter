@@ -153,6 +153,7 @@ jobs:
       - image:  amazon/aws-cli
     steps:
       - checkout
+      - install_awscli
       - run:
           name: Install tar and gzip
           command: yum install -y tar gzip
@@ -191,7 +192,7 @@ jobs:
             - project/.circleci/ansible/inventory.txt
   configure-infrastructure:
     docker:
-      - image: cimg/base:stable
+      - image: cimg/python:3.10
     steps:
       - checkout
       - add_ssh_keys:
@@ -201,9 +202,9 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            - install_awscli
-            - install_ansible
-            - yum install -y tar gzip
+            install_awscli
+            install_ansible
+            yum install -y tar gzip
       - run:
           name: Configure server
           command: |
