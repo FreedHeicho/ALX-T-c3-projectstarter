@@ -203,10 +203,10 @@ jobs:
           at: ~/
       - install_awscli
       - install_ansible
-      - run:
-          name: Install dependencies
-          command: yum install -y tar gzip
-      - run:
+      # - run:
+      #     name: Install dependencies
+      #     command: yum install -y tar gzip
+       - run:
           name: Configure server
           command: |
             cd .circleci/ansible
