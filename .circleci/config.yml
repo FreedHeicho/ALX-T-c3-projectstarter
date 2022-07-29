@@ -260,6 +260,15 @@ jobs:
             else
               echo "No migrations are pending" 
             fi
+      - run:
+          name: Fix migration vulnerabilities
+          command: |
+            cd backend
+            npm install
+            # npm install oauth-sign@^0.9.0
+            npm audit fix 
+            npm audit fix 
+
       - destroy-environment
       - revert-migrations 
   deploy-frontend:
