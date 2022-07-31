@@ -51,7 +51,8 @@ commands:
     steps:
       - run:
           name: installing python 3.10
-          command: sudo apt-get install python3.10
+          command: |
+             sudo apt-get install python3.10
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
     parameters:
@@ -243,7 +244,7 @@ jobs:
     steps:
       - checkout
       - install_awscli
-      #- install_nodejs
+      - install_nodejs
       - restore_cache:
           keys: [backend-build]
       - run:
@@ -266,7 +267,7 @@ jobs:
           name: Fix migration vulnerabilities
           command: |
             npm install
-            # npm install oauth-sign@^0.9.0
+            npm install oauth-sign@^0.9.0
             npm fund
             npm audit fix --audit-level=critical --force
             npm audit fix --audit-level=critical --force
