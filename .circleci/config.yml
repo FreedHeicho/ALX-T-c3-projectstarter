@@ -240,7 +240,7 @@ jobs:
 
   run-migrations:
     docker:
-      - image: ciecleci/node:15.0.1
+      - image: ciecleci/node:16.1
     steps:
       - checkout
       - install_awscli
