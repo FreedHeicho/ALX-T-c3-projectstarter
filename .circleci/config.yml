@@ -279,7 +279,7 @@ jobs:
           at: ~/
       - restore_cache:
           keys: [backend-build]
-      
+      - install_python
       - install_ansible       
       - run:
           name: Install dependencies
