@@ -270,20 +270,31 @@ jobs:
       - revert-migrations 
   deploy-frontend:
     docker: 
-      - image: cimg/python:3.10 
+      - image: python:3.7-alpine3.16
     steps:
-      - install_awscli
+      - checkout
+      - attach_workspace:
+          at: ~/
       - run:
-          name: Get backend url
+          name: Install dependencies
           command: |
-            BACKEND_IP=$(aws ec2 describe-instances \
-            --filters "Name=tag:Name,Values=backend-${CIRCLE_WORKFLOW_ID:0:7}" \
-            --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --output text)
-            export API_URL="http://${BACKEND_IP}:3030"
-            echo "API_URL = ${API_URL}"
-            echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
-            cat frontend/.env
+            apk add --update tar gzip nodejs npm curl
+      - run:
+          name: Install awscli
+          command: |
+            pip install awscli
+      - run:
+          name: Get backend URL      
+          command: |
+              export BACKEND_IP=$(aws ec2 describe-instances \
+              --query 'Reservations[*].Instances[*].PublicIpAddress' \
+              --filters "Name=tag:aws:cloudformation:stack-name", ,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --output text)
+              echo "API_URL = ${API_URL}"
+              echo API_URL="http://{$BACKEND_IP}:3030" >> frontend/.env          
+              cat frontend/ .env
+              # - restore_cache:
+              #     keys: [frontend-build]
       - run:
           name: Deploy frontend objects
           command: |
@@ -292,29 +303,33 @@ jobs:
             npm run build
             tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp dist s3://udapeople-${CIRCLE_WORKFLOW_ID:0:7} --recursive
-      - destroy-environment
+      - destroy-environment:
+          
       - revert-migrations  
 
   deploy-backend:
     docker:
-      - image: amazon/aws-cli
+      - image: python:3.7-alpine3.16
     steps:
       - checkout
       - add_ssh_keys:
           fingerprints: ["24:18:4a:00:d3:99:96:97:24:48:8a:d6:29:ad:2e:7e"]
-      - run:
-          name: Install tar and gzip
-          command: yum install -y tar gzip
+      #- run:
+       #   name: Install tar and gzip
+         # command: yum install -y tar gzip
       - attach_workspace:
           at: ~/
-      - install_python
-      - install_ansible 
       - run:
           name: Install dependencies
           command: |
             cd backend
             npm install
-            yum install -y tar gzip
+            apk add --update tar gzip nodejs npm curl 
+      - run:
+          name: Install awscli
+          command: |
+            pip install awscli
+
       - run:
           name: Deploy backend
           command: |
