@@ -52,7 +52,7 @@ commands:
       - run:
           name: installing python 3.10
           command: |
-             sudo apt-get install python3.10
+              apt-get install python3.10
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
     parameters:
@@ -315,6 +315,10 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: ["24:18:4a:00:d3:99:96:97:24:48:8a:d6:29:ad:2e:7e"]
+      - run:
+          name: Install tar and gzip
+          command: yum install -y tar gzip
+      - install_awscli
       - attach_workspace:
           at: ~/
       - install_awscli
