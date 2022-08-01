@@ -305,10 +305,10 @@ jobs:
       - run:
           name: Install tar and gzip
           command: yum install -y tar gzip
-      - install_awscli
+      
       - attach_workspace:
           at: ~/
-      - install_awscli
+      
       - install_nodejs
       - install_ansible 
       - run:
