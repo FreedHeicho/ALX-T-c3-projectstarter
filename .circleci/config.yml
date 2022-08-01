@@ -267,25 +267,12 @@ jobs:
       - destroy-environment
       - revert-migrations 
   deploy-frontend:
-    docker:
-      - image: amazon/aws-cli
-       
+    docker: 
+      - image: cimg/python:3.10 
     steps:
-      - checkout
-      - run:
-          name: Install tar and gzip
-          command: yum install -y tar gzip
-      - attach_workspace:
-          at: ~/
-      - restore_cache:
-          keys: [backend-build]
-      - install_python
-      - install_ansible       
-      - run:
-          name: Install dependencies
-          command: |
-            cd frontend
-            npm install
+      - install_awscli
+      - install_nodejs
+      
       - run:
           name: Get backend url
           command: |
