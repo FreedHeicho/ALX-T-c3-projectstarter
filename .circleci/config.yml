@@ -50,9 +50,11 @@ commands:
     description: Install Python 3.10
     steps:
       - run:
-          name: installing python 3.10
+          name: "install python for Ansible."
           command: |
-              apt-get install python3.10
+              apt:
+                name: python3
+                update_cache: yes
   revert-migrations:
     description: Revert the last migration if successfully run in the current workflow.
     parameters:
@@ -271,8 +273,6 @@ jobs:
       - image: cimg/python:3.10 
     steps:
       - install_awscli
-      
-      
       - run:
           name: Get backend url
           command: |
@@ -305,9 +305,9 @@ jobs:
       - run:
           name: Install tar and gzip
           command: yum install -y tar gzip
-      
       - attach_workspace:
           at: ~/
+      - install_python
       - install_ansible 
       - run:
           name: Install dependencies
