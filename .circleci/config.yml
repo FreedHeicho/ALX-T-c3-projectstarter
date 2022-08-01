@@ -271,7 +271,7 @@ jobs:
       - image: cimg/python:3.10 
     steps:
       - install_awscli
-      - install_nodejs
+      
       
       - run:
           name: Get backend url
@@ -308,8 +308,6 @@ jobs:
       
       - attach_workspace:
           at: ~/
-      
-      - install_nodejs
       - install_ansible 
       - run:
           name: Install dependencies
