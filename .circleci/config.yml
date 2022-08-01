@@ -243,8 +243,7 @@ jobs:
       - image: circleci/node:15.0.1
     steps:
       - checkout
-      - install_awscli
-      - install_nodejs
+      
       - restore_cache:
           keys: [backend-build]
       - run:
@@ -252,14 +251,9 @@ jobs:
           command: |
             cd backend
             npm install
-            npm fund
-            npm audit fix --audit-level=critical --force
-            npm audit fix --audit-level=critical --force
-            npm run migrations > migrations_dump.txt
-            echo "migration successfully completed" >> migrations_dump.txt
-            cat migrations_dump.txt
-            
-            
+            npm run migrations > migrations.txt
+            #ls -al
+            cat migrations.txt
       - run:
           name: Send migration results to KVDB.io
           command: |
