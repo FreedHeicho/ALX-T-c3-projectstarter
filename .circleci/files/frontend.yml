@@ -10,7 +10,7 @@ Resources:
   WebsiteBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub udapeople-${ID}
+      BucketName: !Sub "udapeople-${ID}"
       AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
@@ -26,6 +26,8 @@ Resources:
           Effect: Allow
           Principal: '*'
           Action: s3:GetObject
+                  s3:PutObject
+                  s3:PutObjectAcl
           Resource: !Join ['', ['arn:aws:s3:::', !Ref 'WebsiteBucket', /*]]
 
 Outputs:
