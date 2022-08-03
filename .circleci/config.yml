@@ -320,12 +320,12 @@ jobs:
          # command: yum install -y tar gzip
       - attach_workspace:
           at: ~/
-      - run:
-          name: Install dependencies
-          command: |
-            cd backend
-            apk add --update tar gzip nodejs npm curl
-            npm install 
+      #- run:
+      #    name: Install dependencies
+      #    command: |
+      #      cd backend
+      #      apk add --update tar gzip nodejs npm curl
+      #      npm install 
       - run:
           name: Install awscli
           command: |
