@@ -242,12 +242,16 @@ jobs:
 
   run-migrations:
     docker:
-      - image: circleci/node:13.8.0
+      - image: python:3.7-alpine3.16
       
     steps:
       - checkout
       - restore_cache:
           keys: [backend-build]
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update  tar gzip nodejs npm ansible curl
       - run:  
           name: Run Migration
           command: |
