@@ -265,7 +265,7 @@ jobs:
           command: |
             if grep -q "has been executed successfully." ~/project/backend/migrations.txt
             then
-              curl  https://kvdb.io/WMGAGb51qQNfJwxmqQ4c8a/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
+              curl  https://kvdb.io/Et2YY1zaLRkzQYqa567g5/migration_${CIRCLE_WORKFLOW_ID:0:7} -d '1'
             fi  
       - destroy-environment  
             
