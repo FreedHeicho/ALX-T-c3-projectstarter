@@ -248,10 +248,10 @@ jobs:
       - checkout
       - restore_cache:
           keys: [backend-build]
-     # - run:
-      #    name: Install dependencies
-      #    command: |
-      #     apk add --update  tar gzip nodejs npm ansible curl
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update  tar gzip nodejs npm ansible curl
       - run:  
           name: Run Migration
           command: |
