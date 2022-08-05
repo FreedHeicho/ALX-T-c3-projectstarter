@@ -319,7 +319,7 @@ jobs:
           fingerprints: ["24:18:4a:00:d3:99:96:97:24:48:8a:d6:29:ad:2e:7e"]
       - attach_workspace:
           at: ~/
-       
+      - install_ansible 
       - run:
           name: Install dependencies
           command: |
