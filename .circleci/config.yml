@@ -420,7 +420,7 @@ jobs:
               --stack-name InitialStack \
               --parameter-overrides WorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}" \
               --tags project=udapeople
-      - destoy-environment
+      - destroy-environment
       - revert-migrations
   cleanup:
     docker:
