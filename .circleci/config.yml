@@ -452,8 +452,8 @@ jobs:
             cat ~/OldWorkflowID.txt
             OldWorkflowID=$(cat ~/OldWorkflowID.txt)
             echo  OldWorkflowID: "${OldWorkflowID}"
-            OldWorkflowID=!Split [ "-", "${OldWorkflowID}" ]
-            OldWorkflowID= $(!Select [ 1, OldWorkflowID ])
+            OldWorkflowID= aws !Split [ "-", "${OldWorkflowID}" ]
+            OldWorkflowID= aws $(!Select [ 1, OldWorkflowID ])
             echo OldWorkflowID: "{$OldWorkflowID}"
 
             echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
