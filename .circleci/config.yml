@@ -423,8 +423,8 @@ jobs:
             #OldWorkflowID= !Select [ 1,  !Split [ "-", $OldWorkflowID ] ]
             myOldWorkflowID=  $OldWorkflowID | cut -d "-" -f 2
             echo myOldWorkflowID
-            echo myOldWorkflowID: ${myOldWorkflowID}
-            echo ${myOldWorkflowID} >> ~/OldWorkflowID.txt
+            echo myOldWorkflowID: $myOldWorkflowID
+            echo $myOldWorkflowID >> ~/OldWorkflowID.txt
             cat ~/OldWorkflowID.txt
             export STACKS=$(aws cloudformation list-stacks --query "StackSummaries[*].StackName" --stack-status-filter CREATE_COMPLETE --no-paginate --output text)
             echo stacks "${STACKS}"
