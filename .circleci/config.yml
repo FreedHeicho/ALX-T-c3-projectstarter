@@ -440,15 +440,16 @@ jobs:
       - revert-migrations
   cleanup:
     docker:
-      - image: python:3.10.5-alpine3.16
+      - image: amazon/aws-cli
     steps:
       - checkout
+      - run: yum install -y tar gzip 
       - attach_workspace:
           at: ~/
-      - run :
-          name: Install dependencies
-          command: |
-            apk add --update --no-cache tar gzip nodejs npm aws-cli curl ansible
+      # - run :
+      #     name: Install dependencies
+      #     command: |
+      #       apk add --update --no-cache tar gzip nodejs npm aws-cli curl ansible
       - run:
           name: fetching old stack workflow id and cleanup
           command: |
@@ -457,10 +458,6 @@ jobs:
             echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
             export STACKS=$(aws cloudformation list-stacks --query "StackSummaries[*].StackName" --stack-status-filter CREATE_COMPLETE --no-paginate --output text) 
             echo Stack names: "${STACKS[@]}"
-            # if [[ "${OldWorkflowID}" != "${OldWorkflowID}" ]]
-            # if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
-            # if [[ "${OldWorkflowID}" =~ "${STACKS[@]}"  ]]
-            # if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
             then
               echo "-----------------Delete Confirmed----------------"
@@ -471,20 +468,7 @@ jobs:
               echo "----------------Cannot Cleanup-----------------"
             fi
            
-            # cat ~/OldWorkflowID.txt
-            # OldWorkflowID=$(cat ~/OldWorkflowID.txt)
-            # echo  OldWorkflowID: "${OldWorkflowID}"
-            # echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
-            # if [[ "${CIRCLE_WORKFLOW_ID:0:7}" != "${OldWorkflowID}" ]]
-            # then
-            #   echo "-----------------Delete Confirmed----------------"
-            #   aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-            #   aws cloudformation delete-stack --stack-name udapeople-backend-${OldWorkflowID}
-            #   aws cloudformation delete-stack --stack-name udapeople-frontend-${OldWorkflowID}
-            # else
-            #   echo "----------------Cannot Cleanup-----------------"
-            # fi              
-        
+                    
                 
 workflows:
   default:
