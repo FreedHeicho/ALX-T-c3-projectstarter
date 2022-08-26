@@ -449,7 +449,7 @@ jobs:
           command: |
             apk add --update --no-cache tar gzip nodejs npm aws-cli curl ansible
       - run:
-          name: fetch old stack workflow id and cleanup
+          name: fetching old stack workflow id and cleanup
           command: |
               cat ~/OldWorkflowID.txt
               OldWorkflowID=$(cat ~/OldWorkflowID.txt)
